@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
-import MainSlideView from './MainSlideView'
-import SlideThumbnailList from './SlideThumbnailList'
-import Toolbar from './Toolbar'
+import Sidebar from './components/Sidebar'
+import ChannelView from './components/ChannelView'
 
 export default class App extends Component {
   render() {
     return (
       <div className="container">
-        <Toolbar/>
         <div className="row">
-          <SlideThumbnailList/>
-          <MainSlideView/>
+            <Sidebar/>
+            <ChannelView/>
         </div>
       </div>
     )
