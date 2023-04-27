@@ -1,14 +1,16 @@
-import React, { Component } from 'react'
-import MessageList from './components/MessageList'
-import Sidebar from './components/Sidebar'
+import React from 'react'
+import "./App.css"
+import Sidebar from './Sidebar'
+import MessageList from './MessageList'
 
-export default class App extends Component {
-  render() {
-    return (
-      <div className="d-flex">
-        <Sidebar/>
-        <MessageList/>
+export default function App() {
+  return (
+    <>
+      <div className="bg-light border p-3">
+        Glack
       </div>
-    )
-  }
+      <Sidebar/>
+      <MessageList/>
+    </>
+  )
 }
