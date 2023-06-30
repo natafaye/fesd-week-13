@@ -1,16 +1,15 @@
-import React from 'react'
-import "./App.css"
-import Sidebar from './Sidebar'
-import MessageList from './MessageList'
+import Sidebar from "./components/Sidebar";
+import SlideView from "./components/SlideView";
+import Toolbar from "./components/Toolbar";
 
 export default function App() {
   return (
-    <>
-      <div className="bg-light border p-3">
-        Glack
+    <div className="container">
+      <Toolbar/>
+      <div className="row">
+        <Sidebar/>
+        <SlideView/>
       </div>
-      <Sidebar/>
-      <MessageList/>
-    </>
+    </div>
   )
 }
