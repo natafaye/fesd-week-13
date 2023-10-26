@@ -21,6 +21,14 @@ reportWebVitals();
 
 
 
+
+
+
+
+
+
+
+
 /**** DISCUSSION OF MOVIE APP DATA *****/
 
 
@@ -51,24 +59,22 @@ const movies = [
     {
         id: 0,
         name: "Star Wars",
-        reviews: [
-        ]
     },
     {
         id: 1,
         name: "Star Trek",
-        reviews: [
-        ]
     }
 ]
 
 // Reviews in a seperate array (in state)
 const reviews = [
     {
-        movieId: 0,
+        id: 0,
+        movieId: 1,
         text: "It was great"
     },
     {
+        id: 1,
         movieId: 1,
         text: "It wasn't great"
     }
