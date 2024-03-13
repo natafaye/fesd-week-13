@@ -1,21 +1,19 @@
-import "./App.css"
-import subtract from "./myspecialstuff"
-import Sidebar from "./Sidebar"
-import MovieList from "./MovieList"
+import NumberPicker from "./NumberPicker"
+import SudokuBoard from "./SudokuBoard"
 
-export default function App() {
-  subtract(2, 5)
+function App() {
+  const myName = "Natalie"
 
   return (
     <div>
-      <Sidebar/>
-      <MovieList/>
-      <Sidebar/>
+      <SudokuBoard/>
+      <NumberPicker />
     </div>
   )
-
-  // React in the background does this:
-  // Make a div
-  // Call Sidebar() take the JSX that's returned and put in the div
-  // Call MovieList() take the JSX that's returned and put in the div
 }
+
+export default App;
+
+
+
+//const myString = `My name is ${myName}`
