@@ -1,0 +1,53 @@
+{
+  "tvshows": [
+    {
+      "id": 0,
+      "title": "Stranger Things",
+      "genre": "Science Fiction",
+      "seasons": 5,
+      "rating": 8.7
+    },
+    {
+      "id": 1,
+      "title": "Breaking Bad",
+      "genre": "Crime Drama",
+      "seasons": 5,
+      "rating": 9.5
+    },
+    {
+      "id": 2,
+      "title": "The Crown",
+      "genre": "Historical Drama",
+      "seasons": 6,
+      "rating": 8.6
+    },
+    {
+      "id": 3,
+      "title": "The Office",
+      "genre": "Comedy",
+      "seasons": 9,
+      "rating": 8.9
+    },
+    {
+      "id": 4,
+      "title": "Game of Thrones",
+      "genre": "Fantasy",
+      "seasons": 8,
+      "rating": 9.3
+    },
+    {
+      "id": 7,
+      "title": "The Mandalorian",
+      "genre": "Science Fiction",
+      "seasons": 3,
+      "rating": 8.7
+    },
+    {
+      "id": 9,
+      "title": "Black Mirror",
+      "genre": "Science Fiction",
+      "seasons": 5,
+      "rating": 8.8
+    }
+  ]
+}

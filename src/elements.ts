@@ -1,0 +1,1 @@
+export const showsTable = document.getElementById("shows-table") as HTMLTableSectionElement // Thanks, I'll take it from here
