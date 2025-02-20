@@ -1,0 +1,91 @@
+{
+  "products": [
+    {
+      "id": 2,
+      "name": "Watercolor Paper Pad",
+      "brand": "Canson",
+      "price": 15.49,
+      "category": "Paper",
+      "size": "9x12 inches",
+      "pages": 30,
+      "weight": "300gsm",
+      "in_stock": true
+    },
+    {
+      "id": 3,
+      "name": "Graphite Pencil Set",
+      "brand": "Faber-Castell",
+      "price": 12.99,
+      "category": "Drawing",
+      "grades": [
+        "2H",
+        "HB",
+        "2B",
+        "4B",
+        "6B",
+        "8B"
+      ],
+      "in_stock": true
+    },
+    {
+      "id": 4,
+      "name": "Canvas Panel Pack",
+      "brand": "Arteza",
+      "price": 24.99,
+      "category": "Canvas",
+      "size": "8x10 inches",
+      "quantity": 5,
+      "material": "Cotton",
+      "in_stock": false
+    },
+    {
+      "id": 6,
+      "name": "Alcohol Markers Set",
+      "brand": "Copic",
+      "price": 89.99,
+      "category": "Markers",
+      "colors": 24,
+      "dual_tip": true,
+      "in_stock": true
+    },
+    {
+      "id": 8,
+      "name": "Gouache Paint Set",
+      "brand": "Himi",
+      "price": 32.99,
+      "category": "Paints",
+      "colors": 18,
+      "size": "30ml each",
+      "in_stock": true
+    },
+    {
+      "id": 9,
+      "name": "Sketchbook",
+      "brand": "Moleskine",
+      "price": 22.5,
+      "category": "Paper",
+      "size": "5x8.25 inches",
+      "pages": 104,
+      "paper_type": "Acid-Free",
+      "in_stock": true
+    },
+    {
+      "name": "Pencils",
+      "brand": "Very Good",
+      "price": 3,
+      "id": 11
+    },
+    {
+      "name": "Pencils",
+      "brand": "Very Good",
+      "price": 3,
+      "id": 12
+    },
+    {
+      "name": "Pencils",
+      "brand": "Very Good",
+      "price": 3,
+      "id": 14
+    }
+  ]
+}
