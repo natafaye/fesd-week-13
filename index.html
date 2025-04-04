@@ -1,17 +1,22 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-  </head>
-  <body>
-    <h2>Buy Our Art Supplies!</h2>
-    <button id="add-button">Add</button>
-    <table class="table table-striped">
-        <tbody id="art-supplies-table-body"></tbody>
-    </table>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + TS</title>
+  <!-- WE CAN'T DO THIS ANYMORE WITH VITE - import into main.ts instead -->
+  <!-- Why is this no good? Because that CSS isn't going to be at that spot 
+    everything gets copied to new spots by the building-->
+  <!-- <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/> -->
+</head>
+
+<body>
+  <h1>Messages</h4>
+    <div id="messages-list"></div>
+    <textarea id="new-message-text"></textarea><button id="send-button">Send</button>
     <script type="module" src="/src/main.ts"></script>
-  </body>
+</body>
+
 </html>
