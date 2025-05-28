@@ -6,17 +6,21 @@
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vite + TS</title>
-  <!-- WE CAN'T DO THIS ANYMORE WITH VITE - import into main.ts instead -->
-  <!-- Why is this no good? Because that CSS isn't going to be at that spot 
-    everything gets copied to new spots by the building-->
-  <!-- <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/> -->
 </head>
 
 <body>
-  <h1>Messages</h4>
-    <div id="messages-list"></div>
-    <textarea id="new-message-text"></textarea><button id="send-button">Send</button>
-    <script type="module" src="/src/main.ts"></script>
+  <h3>Ideas</h3>
+  <div id="ideas-container"></div>
+  <h3>Wish List</h3>
+  <input type="text" id="textbox" />
+  <select id="priority-select">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+  </select>
+  <button id="add-button">Add</button>
+  <div id="list-container"></div>
+  <script type="module" src="/src/main.ts"></script>
 </body>
 
 </html>

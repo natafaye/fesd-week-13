@@ -1,73 +1,104 @@
-import { renderMessageList } from "./rendering"
-import { makeNewMessage } from "./makeNewMessage"
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+import { NPS_API_KEY } from "./API_KEY"
+import renderIdeas from "./renderIdeas"
+import getAPIURL from "./getAPIURL"
 
-// SWITCH PROJECT FROM SIMPLE TO PROFESSIONAL
-// use vite to make a project
-// run "npm install" command
-// bring .json file over if you're using json-server
-// run json-server again in this folder instead
-// copy over just the HTML stuff not the script tag into the index.html
-// copy over the JS into the main.ts
-// Switch any onClick="functionName()" to addEventListener("click", functionName)
-// Switch link rel="stylesheet" to importing the CSS into your main.ts
-// run the front end with "npm run dev" command NOT Live Server Go Live button
-
-// BREAK INTO 3 FILES with import/export
-// For breaking into files, don't make it hard on yourself
-// Easiest thing to move is a pure-ish function
-// It can't change a variable from another file (the state possibly)
-// Feel free to make up a new dumb function to put in another file
-
-// MAKE TYPESCRIPT HAPPY
-// Go through each issue one by one, google if necessary
-// Any getElementById you probably want to use the "as" to type it explicitly
-// Make a named object type for your data/state and type that state variable with your data (based off your database)
-// Type any parameters to a function
-
-(document.getElementById("send-button") as HTMLButtonElement).addEventListener("click", handleSend)
-
-type Message = {
+type WishlistItem = {
     id: number
-    username: string
-    sent: string
-    read: boolean
     text: string
+    priority: number
 }
 
-// STATE
-export let messageList: Message[] = []
-
-// If you don't need the results on the next few lines, then a Promise is fine, no need to wait
-// If you need the results on the next linse, then you don't want a Promise, you need to await the async function
-// fetch is async
-
-async function loadMessagesData() {
-    // Get the data from the backend
-    const response = await fetch("http://localhost:3000/messages")
-    const fetchedData = await response.json()
-    // Save the data in state
-    messageList = fetchedData
-    // Show the data in the page
-    renderMessageList()
+// Typescript types are your minimum requirements
+// What your code needs
+// Everything else can be left off
+type Idea = {
+    shortDescription: string
 }
-loadMessagesData()
 
-async function handleSend() {
-    const newMessage = makeNewMessage()
+export let ideas: Array<Idea> = [] // export let ideas: Idea[] = []
+let wishlist: Array<WishlistItem> = [] // let wishlist: WishlistItem[] = []
 
-    // create on backend
-    const response = await fetch("http://localhost:3000/messages", {
+
+async function getIdeas() {
+    const URL = "https://developer.nps.gov/api/v1/thingstodo?stateCode=NV&limit=5&api_key=" + NPS_API_KEY
+
+    const response = await fetch(URL)
+    const data = await response.json()
+    ideas = data.data
+    renderIdeas()
+}
+
+async function getWishlist() {
+    const response = await fetch(getAPIURL())
+    const data = await response.json()
+    wishlist = data
+    renderWishlist()
+}
+
+const wishlistContainer = document.querySelector("#list-container") as HTMLDivElement
+
+function renderWishlist() {
+    wishlistContainer.innerHTML = `
+        <ul class="list-group">
+            ${wishlist.map(item => `
+                <li class="list-group-item" onclick="deleteWishlistItem(${item.id})">${item.text}</li>
+            `).join("")} 
+        </ul>
+    `// TODO: FIX DELETE 🥲
+}
+
+async function deleteWishlistItem(idToDelete: number) {
+    fetch(getAPIURL() + idToDelete, {
+        method: "DELETE",
+    })
+
+    const indexToDelete = wishlist.findIndex(item => item.id === idToDelete)
+    wishlist.splice(indexToDelete, 1)
+
+    renderWishlist()
+}
+
+getIdeas()
+getWishlist()
+
+const textbox = document.getElementById("textbox") as HTMLInputElement
+const select = document.getElementById("priority-select") as HTMLSelectElement
+
+async function addToWishlist() {
+    const newItemData = {
+        text: textbox.value,
+        priority: select.value
+    }
+
+    // Adding on the backend
+    const response = await fetch(getAPIURL(), {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(newMessage)
+        body: JSON.stringify(newItemData)
     })
-    const newlyCreatedMessage = await response.json()
-    console.log(newlyCreatedMessage)
+    const createdItem = await response.json()
 
-    // create on frontend = add to state, re-render
-    messageList.push(newlyCreatedMessage)
-    renderMessageList()
+    // Adding on the frontend
+    wishlist.push(createdItem)
+
+    // Update the UI
+    renderWishlist()
 }
+
+document.getElementById("add-button")?.addEventListener("click", addToWishlist)
+
+
+// CONVERSION CHECKLIST
+// 1) Make the folder with vite
+// 2) Copy over the javascript to main.ts and the HTML to index.html
+// 3) Convert any onclick="" to addEventListener
+// 4) Install and import bootstrap into a ts file
+// 5) Break code into 3 files and import anything that's needed
+//      * You cannot change variables that have been imported
+// 6) Fix all the Typescript temper tantrums
+//      * Parameters
+//      * Arrays with nothing in it (probably make a named type for your object that's in the array)
+//      * getElementById and queryString results (use "as" and google or autocomplete to find the HTML element type)

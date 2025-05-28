@@ -1,0 +1,14 @@
+{
+  "wishlist": [
+    {
+      "id": 0,
+      "text": "Go to Lake Tahoe",
+      "priority": 3
+    },
+    {
+      "id": 1,
+      "text": "Go to Pyramid Lake",
+      "priority": 1
+    }
+  ]
+}
