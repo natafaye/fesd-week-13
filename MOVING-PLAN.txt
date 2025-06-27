@@ -1,0 +1,35 @@
+MOVING PLAN
+
+1 - Move over the HTML body contents into the index.html body
+
+2 - Copy over the JS into the main.ts file
+
+3 - Any onclick="fdsfdsfds()" won't work and need to to be switched to addEventListener
+
+4 - Install and IMPORT Bootstrap into any JS file
+RULE: Don't make your own script tags or link tags to connect JS or CSS files
+
+5 - Break our app into at least 3 files and use import/export to keep it all working
+(don't be afraid to do dumb things to force into 3 files)
+You cannot change something that has been imported
+Don't try to pull out a function that changes a variable in another file
+
+6 - Make Typescript happy
+
+1 - Your data
+    * Make a named object type for each data object type
+2 - Your parameters
+3 - (just this week) Your HTML elements
+
+
+
+
+Data Types
+number
+string
+boolean
+null
+undefined
+object
+array
+function

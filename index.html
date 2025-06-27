@@ -1,26 +1,25 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+  </head>
+  <body>
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vite + TS</title>
-</head>
+    <h3>Ideas</h3>
+    <div id="ideas-container"></div>
+    <h3>Wish List</h3>
+    <input type="text" id="textbox"/>
+    <select id="priority-select">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+    <button id="add-button">Add</button>
+    <div id="list-container"></div>
 
-<body>
-  <h3>Ideas</h3>
-  <div id="ideas-container"></div>
-  <h3>Wish List</h3>
-  <input type="text" id="textbox" />
-  <select id="priority-select">
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-  </select>
-  <button id="add-button">Add</button>
-  <div id="list-container"></div>
-  <script type="module" src="/src/main.ts"></script>
-</body>
-
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>

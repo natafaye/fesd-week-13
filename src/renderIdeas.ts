@@ -2,7 +2,8 @@ import { ideas } from "./main"
 
 const ideasContainer = document.querySelector("#ideas-container") as HTMLDivElement
 
-export default function renderIdeas() {
+export function renderIdeas() {
+    // innerHTML or createElement & appendChild
     ideasContainer.innerHTML = `
         <div>
             ${ideas.map(idea => `
