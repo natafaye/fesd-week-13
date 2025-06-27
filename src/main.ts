@@ -18,8 +18,8 @@ type WishListItem = {
 }
 
 // STATE
-export let ideas: ThingToDo[] = []
-export let wishlist: WishListItem[] = []
+export let ideas: ThingToDo[] = [];
+export let wishlist: WishListItem[] = [];
 // start as empty until we fill them in from the API
 
 // Replace the onclick with an add event listener
