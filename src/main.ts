@@ -1,110 +1,134 @@
-import { NPS_API_KEY } from "./API_KEY"
-import { renderIdeas } from "./renderIdeas"
-import { stupidFunction } from "./stupidfunction"
+// Instead of this:
+// <link rel="stylesheet" href="node_modules/whatever/bootstrap.min.css"/>
+// We now do this:
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+import renderChannelButtons from "./renderChannelButtons"
+import makeMessageData from "./makeMessageData"
+//import rebeccaPath from "./images/therebecca.jpg"
 
-type ThingToDo = {
-  shortDescription: string
-  // There's way more things, I just don't care
-  activity: {
-    id: string
-  }
+// You don't want onMessageSend to run immediately, so you wrap it in a baby function
+// When doing addEventListener you don't need to pass the event object
+// Instead of this:
+// onclick="onMessageSend(even)"
+// We now do this:
+const sendButton = document.getElementById("send-button") as HTMLButtonElement
+sendButton.addEventListener("click", onMessageSend)
+
+
+type Message = {
+    text: string
+    channel: string
+    id: number
 }
 
-type WishListItem = {
-  id: number
-  text: string
-  priority: number
+export let currentChannel = "#general"
+export let channels: string[] = []
+let messages: Message[] = []
+
+/***** LISTENING *****/
+
+export function switchChannel(newChannel: string) {
+    // Update the state
+    currentChannel = newChannel
+    // Re-render based on the state
+    renderChannelButtons()
+    renderMessages()
 }
 
-// STATE
-export let ideas: ThingToDo[] = [];
-export let wishlist: WishListItem[] = [];
-// start as empty until we fill them in from the API
+export const myTextbox = document.querySelector("#textbox-thing") as HTMLInputElement
 
-// Replace the onclick with an add event listener
-(document.getElementById("add-button") as HTMLButtonElement).addEventListener("click", addToWishlist)
+async function onMessageSend(event: Event) {
+    // Don't refresh the page you weirdo
+    event.preventDefault()
 
-async function getIdeas() {
-    // Give the query parameter stateCode the value of "NV"
-    const URL = "https://developer.nps.gov/api/v1/thingstodo?stateCode=NV&limit=5&api_key=" + NPS_API_KEY
+    const messageData = makeMessageData()
 
-    // Get the response "envelope"
-    // await = Don't give me a promise, I'll wait
-    // Get the data out of the response "envelope"
-    const response = await fetch(URL)
-    const data = await response.json()
-    // set the state to the list
-    ideas = data.data
+    // Tell the user it's waiting
+    sendButton.disabled = true
+    sendButton.textContent = "Sending..."
 
-    // Loop over it and make myself a new array of new objects that just have properties set to the crazy nested bits
-
-    // render based on that state
-    renderIdeas()
-}
-
-async function getWishlist() {
-    const response = await fetch("http://localhost:3000/wishlist")
-    const data = await response.json()
-    wishlist = data
-    renderWishlist()
-}
-
-const wishlistContainer = document.querySelector("#list-container")! // is an option as well
-
-function renderWishlist() {
-    wishlistContainer.innerHTML = `
-        <ul class="list-group">
-            ${wishlist.map(item => `
-                <li class="list-group-item" onclick="deleteWishlistItem(${item.id})">${item.text}</li>
-            `).join("")}
-        </ul>
-    `
-}
-
-async function deleteWishlistItem(idToDelete: number) {
-    // delete from the backend
-    // tradeoffs for waiting and tradeoffs for not waiting
-    fetch("http://localhost:3000/wishlist/" + idToDelete, {
-        method: "DELETE",
-    })
-
-    // delete from the frontend
-    const indexToDelete = wishlist.findIndex(item => item.id === idToDelete)
-    wishlist.splice(indexToDelete, 1)
-
-    // update the UI based on the state
-    renderWishlist()
-}
-
-
-getIdeas()
-getWishlist()
-
-
-const textbox = document.getElementById("textbox") as HTMLInputElement
-const select = document.getElementById("priority-select") as HTMLSelectElement
-
-async function addToWishlist() {
-    const newItemData = {
-        text: textbox.value,
-        priority: select.value
-    }
-
-    // Adding on the backend
-    const response = await fetch("http://localhost:3000/wishlist", {
+    // Update the database
+    const response = await fetch("http://localhost:3005/messages", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            //"Authorization": 
         },
-        body: JSON.stringify(newItemData)
+        body: JSON.stringify(messageData)
     })
-    const createdItem = await response.json()
 
-    // Adding on the frontend
-    stupidFunction(createdItem)
+    const createdMessage = await response.json()
 
-    // Update the UI
-    renderWishlist()
+    // Tell it we're no longer waiting
+    sendButton.disabled = false
+    sendButton.textContent = "Send"
+
+    // Updating the state
+    messages.push(createdMessage)
+
+    // Re-rendering based on that updated state
+    renderMessages()
+
+    // Clear out the textbox
+    myTextbox.value = ""
 }
+
+/***** RENDERING *****/
+
+const paragraphContainer = document.getElementById("paragraph-container") as HTMLParagraphElement
+function renderMessages() {
+    paragraphContainer.replaceChildren()
+
+    // Filter for only messages in the current channel
+    messages
+        .filter(m => m.channel === currentChannel)
+        .forEach(message => {
+
+            // Make a new little paragraph soul
+            const paraSoul = document.createElement("p")
+
+            // Set the text of the paragraph to the message text
+            paraSoul.textContent = message.text
+
+            // just for demo purposes
+            // paraSoul.style.backgroundImage = "url(" + rebeccaPath + ")"
+
+            // Listen to clicks on the paragraph
+            paraSoul.addEventListener("click", () => {
+                // Have it remove itself from the page
+                paraSoul.remove()
+
+                // remove from the state (fine enough way)
+                const indexToRemove = messages.findIndex(m => m.id === message.id)
+                messages.splice(indexToRemove, 1)
+
+                // remove from the database
+                // it could make sense to not wait here (downside, what if this go wrong? the user won't know)
+                fetch("http://localhost:3005/messages/" + message.id, { method: "DELETE" })
+            })
+
+            // Move the paragraph from the Great Before to the page
+            paragraphContainer.appendChild(paraSoul)
+        })
+}
+
+// Render when the page first loads in
+async function loadApp() {
+    // get the data and put it in the "state" variables of channels and messages
+    // I've got time, baby, make me wait
+    // We are calling fetch and we ARE waiting
+    const response = await fetch("http://localhost:3005/messages")
+    const messagesData = await response.json()
+    messages = messagesData
+    const channelsResponse = await fetch("http://localhost:3005/channels")
+    const channelsData = await channelsResponse.json()
+    channels = channelsData
+
+    // Pick whether to use await or not based on if the next bit of could needs to happen after
+    // or needs to happen right away
+
+    renderChannelButtons()
+    renderMessages()
+}
+
+// We are calling loadApp and NOT waiting
+loadApp()

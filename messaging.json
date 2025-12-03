@@ -1,0 +1,34 @@
+{
+  "channels": [
+    "#general",
+    "#my-class",
+    "#another-channel"
+  ],
+  "messages": [
+    {
+      "text": "",
+      "channel": "#general",
+      "id": 6
+    },
+    {
+      "text": "Hello there!",
+      "channel": "#general",
+      "id": 7
+    },
+    {
+      "text": "Are you working?",
+      "channel": "#another-channel",
+      "id": 8
+    },
+    {
+      "text": "I'm doing great",
+      "channel": "#general",
+      "id": 9
+    },
+    {
+      "text": "How's the class going?",
+      "channel": "#my-class",
+      "id": 10
+    }
+  ]
+}
